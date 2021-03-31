@@ -20,7 +20,7 @@ class SplashScreen : AppCompatActivity() {
     {
         //Setting Status Bar Color
 
-        window.statusBarColor = ContextCompat.getColor(this, R.color.greenCustom)
+        window.statusBarColor = ContextCompat.getColor(this, R.color.orangecustom)
 
         // Getting the Views From Xml
 
@@ -48,13 +48,13 @@ class SplashScreen : AppCompatActivity() {
 
         }.start()
         text.animate().apply {
-            duration = 3000;
+            duration = 3000
             alpha(1f)
         }.start()
 
         // Intent Switcher
         Handler(Looper.getMainLooper()).postDelayed({
-            var i = Intent(this,MainActivity::class.java)
+            val i = Intent(this,MainActivity::class.java)
             startActivity(i)
             finish()
         },3800)
