@@ -7,4 +7,10 @@
     <string name="verify_otp_text">Verify OTP</string>
     <string name="get_otp">Get Otp</string>
     <string name="fillcorrect">Check it</string>
+    <string name="login">Login</string>
+    <string name="enter_your_credentials">Enter Your Credentials</string>
+    <string name="your_first_name">Your First Name</string>
+    <string name="enter_your_uid_number">Enter Your UID Number</string>
+    <string name="enter_your_pincode">Enter Your Pincode</string>
+    <string name="send_otp">Send Otp</string>
 </resources>

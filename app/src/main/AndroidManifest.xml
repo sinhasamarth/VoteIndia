@@ -9,10 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.VoteIndia">
-        <activity android:name=".otpScreen"></activity>
-        <activity android:name=".MainActivity"></activity>
-        <activity
-            android:name=".SplashScreen">
+        <activity android:name=".loginScreen"></activity>
+        <activity android:name=".otpScreen" />
+        <activity android:name=".MainActivity" />
+        <activity android:name=".SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
