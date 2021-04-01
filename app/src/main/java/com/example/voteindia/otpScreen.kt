@@ -1,12 +1,11 @@
 package com.example.voteindia
 
-import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
+import android.os.Bundle
 
-class MainActivity : AppCompatActivity() {
+class otpScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_otp_screen)
     }
 }
