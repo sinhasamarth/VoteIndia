@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">Vote India</string>
     <string name="App_Name">VOTE INDIA</string>
+    <string name="resend_text">Resend Now</string>
+    <string name="submitText">Submit</string>
+    <string name="otpText">OTP</string>
+    <string name="verify_otp_text">Verify OTP</string>
+    <string name="get_otp">Get Otp</string>
+    <string name="fillcorrect">Check it</string>
 </resources>

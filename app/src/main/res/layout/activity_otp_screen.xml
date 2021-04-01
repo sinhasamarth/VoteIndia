@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:orientation="vertical"
+    android:padding="30dp"
+    android:gravity="center"
+    android:background="@drawable/bg1">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/verify_otp_text"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        android:textAllCaps="true"
+        android:layout_margin="15dp"
+        />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="The Otp has been Succesfully send to +91-1234567890"
+        android:textAlignment="center"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:textAllCaps="true"
+        android:layout_margin="15dp"
+        />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:startIconDrawable="@drawable/ic_baseline_fingerprint_24"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:hint= "@string/otpText"
+        android:textSize="15sp"
+        app:helperTextEnabled="true"
+        app:helperText="Enter Otp above "
+        app:errorEnabled="true"
+        app:counterEnabled="true"
+        app:counterMaxLength="4"
+
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:textSize="15sp"
+            android:maxLength="4"
+            android:maxLines="1"
+            android:singleLine="true"
+            />
+        <Button
+            android:layout_margin="1dp"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/resend_text"
+            android:textColor="@color/greenCustom"
+            android:textStyle="bold"
+            android:textAlignment="textEnd"
+            />
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="20sp"
+            android:text="@string/submitText"
+            app:cornerRadius="15dp"
+            android:textColor="@color/white"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+
+</LinearLayout>
