@@ -14,6 +14,7 @@ class SplashScreen : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_screen)
         getSplash()
+
     }
 
     fun getSplash()
@@ -51,10 +52,11 @@ class SplashScreen : AppCompatActivity() {
 
         // Intent Switcher
         Handler(Looper.getMainLooper()).postDelayed({
-            val i = Intent(this,MainActivity::class.java)
+            val i = Intent(this,loginScreen::class.java)
             startActivity(i)
             finish()
         },3800)
+
     }
 
 }
