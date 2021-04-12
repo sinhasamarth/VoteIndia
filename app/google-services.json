@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "77870426359",
+    "project_id": "vote-india-a2cd3",
+    "storage_bucket": "vote-india-a2cd3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:77870426359:android:6eda4ee908b7c529bb8bf2",
+        "android_client_info": {
+          "package_name": "com.example.voteindia"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "77870426359-4bi10qmio51b7bkk20lvq6tss09ppm49.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD9qu7oHCUVVwe6yjNK7u4FjTykc5_N3SY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "77870426359-4bi10qmio51b7bkk20lvq6tss09ppm49.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
