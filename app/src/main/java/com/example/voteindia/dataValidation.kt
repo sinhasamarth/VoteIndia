@@ -1,3 +1,7 @@
+
+
+
+
 package com.example.voteindia
 
 import android.util.Log
@@ -7,18 +11,21 @@ import java.util.*
 import kotlin.text.toUpperCase as textToUpperCase
 
 class dataValidation {
+
     companion object{
+
          var phoneNoss:String = "Fails"
-        fun validataeData( Name:String , UIDNo :String , Pincode:String):String{
+         fun validataeData( Name:String , UIDNo :String , Pincode:String):String
+         {
+
             val fire = FirebaseDatabase.getInstance().getReference("MainDatabase")
             fire.child("$Pincode/$UIDNo").get().addOnSuccessListener {
                 if(it.exists())
                 {
-                    if (Name.textToUpperCase(Locale.ROOT)
-                            ==
-                            it.child("Name").value.toString().textToUpperCase(Locale.ROOT))
+                    if (Name == it.child("Name").value.toString())
                     {
-                        getPhoneNo(it.child("PhoneNo").value.toString())
+                        phoneNoss = (it.child("PhoneNo").value.toString())
+                        Log.d("PhoneNo" , phoneNoss)
                     }
                 }
 
@@ -26,7 +33,8 @@ class dataValidation {
 
             return phoneNoss
     }
-        fun getPhoneNo(p:String){
+
+        private fun getPhoneNo(p:String){
             phoneNoss = p
         }
     }

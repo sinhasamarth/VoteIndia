@@ -5,14 +5,18 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import com.example.voteindia.userData
 import android.widget.Toast
 import androidx.core.widget.doOnTextChanged
 import com.example.voteindia.databinding.ActivityLoginScreenBinding
 import com.google.android.material.textfield.TextInputEditText
 
 private lateinit var binding: ActivityLoginScreenBinding
+var UserDataDetails:userData? = null
 class loginScreen : AppCompatActivity() {
+
     var checkAllConditions = arrayOf(false, false , false)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginScreenBinding.inflate(layoutInflater)
@@ -40,29 +44,28 @@ class loginScreen : AppCompatActivity() {
             {
                 getuid.error="Enter Full UID"
                 checkAllConditions[0] = false
-                onOtpBtn()
 
             }
             else
             {
                 checkAllConditions[0] = true
                 getuid.error=null
-                onOtpBtn()
             }
+            onOtpBtn()
         }
         getPincode.doOnTextChanged { text, start, before, count ->
             if(text!!.length<6)
             {
                 getPincode.error="Enter Full PINCODE"
                 checkAllConditions[1] = false
-                onOtpBtn()
+
             }
             else
             {
                 checkAllConditions[1] = true
                 getPincode.error=null
-                onOtpBtn()
             }
+            onOtpBtn()
         }
         //Error Check section finished
         //-----------------------------
@@ -76,7 +79,7 @@ class loginScreen : AppCompatActivity() {
 
                     )
                     Log.d("Working",p)
-                    if(p == "Fails" || p == "-1")
+                    if(p == "Fails")
                     {
                         Toast.makeText(this,p,Toast.LENGTH_SHORT).show()
                     }

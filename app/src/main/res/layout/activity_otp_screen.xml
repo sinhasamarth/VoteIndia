@@ -21,16 +21,28 @@
         />
 
     <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/otpNoDisaply"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="The Otp has been Succesfully send to +91-1234567890"
         android:textAlignment="center"
-        android:textSize="15sp"
+        android:textSize="13sp"
         android:textStyle="bold"
         android:textAllCaps="true"
-        android:layout_margin="15dp"
+        android:layout_marginTop="15dp"
         />
 
+
+    <com.google.android.material.textview.MaterialTextView
+    android:id="@+id/resendTimer"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:textAlignment="center"
+    android:textSize="15sp"
+    android:textStyle="bold"
+    android:textAllCaps="true"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="15dp"
+    />
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -56,6 +68,7 @@
             android:singleLine="true"
             />
         <Button
+            android:id="@+id/resendOtpBtn"
             android:layout_margin="1dp"
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="match_parent"
