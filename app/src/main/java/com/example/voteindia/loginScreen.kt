@@ -1,15 +1,18 @@
-package com.example.voteindia
+    package com.example.voteindia
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.widget.Button
 import com.example.voteindia.userData
 import android.widget.Toast
 import androidx.core.widget.doOnTextChanged
 import com.example.voteindia.databinding.ActivityLoginScreenBinding
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
+import com.google.firebase.database.FirebaseDatabase
 
 private lateinit var binding: ActivityLoginScreenBinding
 var UserDataDetails:userData? = null
@@ -69,28 +72,35 @@ class loginScreen : AppCompatActivity() {
         }
         //Error Check section finished
         //-----------------------------
-        sendOtpButton.setOnClickListener(){
+        sendOtpButton.setOnClickListener{
+            val Layoutinflater = LayoutInflater.from(this)
+                .inflate(R.layout.waiting_screen, null, false)
+            val fire = FirebaseDatabase.getInstance().getReference("MainDatabase")
+            fire.child("${getPincode.text.toString()}/${getuid.text.toString()}").get().addOnSuccessListener {
+                if(it.exists())
+                {
+                    val alertDialog = MaterialAlertDialogBuilder(this)
 
-                run {
-                    val p = dataValidation.validataeData(
-                            getName.text.toString(),
-                            getuid.text.toString(),
-                            getPincode.text.toString()
-
-                    )
-                    Log.d("Working",p)
-                    if(p == "Fails")
-                    {
-                        Toast.makeText(this,p,Toast.LENGTH_SHORT).show()
-                    }
-                    else
-                    {
-                        goToOtpSec(p)
-                    }
-
+                    alertDialog.setView(Layoutinflater)
+                        .setCancelable(false)
+                        .show()
+                    Toast.makeText(this,
+                        "${it.child("PhoneNo").value.toString()}",
+                        Toast.LENGTH_SHORT)
+                        .show()
+                    goToOtpSec(it.child("PhoneNo").value.toString())
                 }
+                else{
+                    Toast.makeText(this,"Fail",Toast.LENGTH_SHORT).show()
+                }
+
+            }.addOnFailureListener {
+                Toast.makeText(this,"Fail",Toast.LENGTH_SHORT).show()
+            }
+
             }
     }
+
 
     private fun onOtpBtn() {
         if(

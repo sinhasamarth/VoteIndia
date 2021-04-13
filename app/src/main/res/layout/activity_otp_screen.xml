@@ -44,6 +44,7 @@
     android:layout_marginBottom="15dp"
     />
     <com.google.android.material.textfield.TextInputLayout
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:startIconDrawable="@drawable/ic_baseline_fingerprint_24"
@@ -54,18 +55,22 @@
         app:helperText="Enter Otp above "
         app:errorEnabled="true"
         app:counterEnabled="true"
-        app:counterMaxLength="4"
-
+        app:counterMaxLength="6"
+        app:hintEnabled="true"
         >
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="number"
+            android:hint="------"
+            android:id="@+id/getOtp"
             android:textSize="15sp"
-            android:maxLength="4"
+            android:maxLength="6"
             android:maxLines="1"
             android:singleLine="true"
+            android:letterSpacing="0.8"
+            android:importantForAutofill="yes"
             />
         <Button
             android:id="@+id/resendOtpBtn"
@@ -80,6 +85,7 @@
             />
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/OtpmainBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
