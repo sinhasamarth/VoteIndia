@@ -43,13 +43,7 @@ class otpScreen() : AppCompatActivity() {
                 val credential = PhoneAuthProvider.getCredential(verification_Id,code)
                 signInWithPhoneAuthCredential(credential)
         }
-        binding.resendOtpBtn.setOnClickListener{
-            if(resendTocken != null) {
-                resendCode(resendTocken)
-            }
 
-            coundownTimerStarter()
-        }
 
     }
 

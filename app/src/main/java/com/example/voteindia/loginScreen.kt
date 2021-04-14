@@ -15,7 +15,6 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.database.FirebaseDatabase
 
 private lateinit var binding: ActivityLoginScreenBinding
-var UserDataDetails:userData? = null
 class loginScreen : AppCompatActivity() {
 
     var checkAllConditions = arrayOf(false, false , false)
@@ -119,6 +118,8 @@ class loginScreen : AppCompatActivity() {
         i.putExtra("UserPincode" , binding.getPinCode.text.toString())
         i.putExtra("UserName" , binding.getName.text.toString())
         i.putExtra("PhoneNoUser" , phoneNo)
+
+
         startActivity(i)
         finish()
     }
