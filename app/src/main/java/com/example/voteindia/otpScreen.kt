@@ -43,6 +43,13 @@ class otpScreen() : AppCompatActivity() {
                 val credential = PhoneAuthProvider.getCredential(verification_Id,code)
                 signInWithPhoneAuthCredential(credential)
         }
+        binding.resendOtpBtn.setOnClickListener{
+            if(resendTocken != null) {
+                resendCode(resendTocken)
+            }
+
+            coundownTimerStarter()
+        }
 
     }
 
@@ -80,6 +87,17 @@ class otpScreen() : AppCompatActivity() {
             }
 
         }
+    }
+
+    private fun resendCode( resendTocken:PhoneAuthProvider.ForceResendingToken) {
+        val options = PhoneAuthOptions.newBuilder(FirebaseAuth.getInstance())
+                .setPhoneNumber("+91"+ PhoneNo)       // Phone number to verify
+                .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
+                .setActivity(this)                 // Activity (for callback binding)
+                .setCallbacks(callbacks) // OnVerificationStateChangedCallbacks
+                .setForceResendingToken(resendTocken)
+                .build()
+        PhoneAuthProvider.verifyPhoneNumber(options)
     }
 
     private fun signInWithPhoneAuthCredential(p0: PhoneAuthCredential) {
