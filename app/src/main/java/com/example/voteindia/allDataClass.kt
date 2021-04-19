@@ -8,9 +8,9 @@ data class userData(
         val isVoted:Boolean
         )
 
-data class Maindata(val CandName :String,
-                    val PartyName:String,
-                    val PartyLogo:String,
-                    val CandidiateImage :String,
-                    val CandUiD:String
+data class Item(var CandidateName:String,
+                    var PartyName:String,
+                    var CandidatePhoto:Int,
+                    var PartyLogo:Int,
+
 )

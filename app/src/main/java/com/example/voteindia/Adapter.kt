@@ -1,62 +1,57 @@
 package open.git.votingmainpainel
 
-import android.graphics.Color
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
-import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.example.voteindia.MainActivity
-import com.example.voteindia.Maindata
-import com.example.voteindia.ShowVoting.Companion.checkBtn
-import com.example.voteindia.ShowVoting.Companion.resetColor
-import com.example.voteindia.isselected
-import com.example.voteindia.selectedno
-import com.example.voteindia.*
+import com.example.voteindia.Item
+import com.example.voteindia.R
 
-class adapter(val datas:ArrayList<Maindata>):RecyclerView.Adapter<viewHolderMain>() {
+var tempInfo=ArrayList<Item>(0)
+var tempPosition:Int=0
+class adapter(val info:ArrayList<Item>):RecyclerView.Adapter<adapter.ViewHanger>(){
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): viewHolderMain {
-        val view = LayoutInflater.from(parent.context).inflate(
-            R.layout.each_cand_view,
-            parent,
-            false
-        )
-        return viewHolderMain(view)
-    }
 
-    override fun onBindViewHolder(holder: viewHolderMain, position: Int) {
-        holder.participantName.text = datas[position].CandName
-        holder.partyName.text = datas[position].PartyName
-        Glide.with(holder.partyLogo.context).load(datas[2]).into(holder.partyLogo)
-        Glide.with(holder.candidateImage.context).load(datas[2]).into(holder.candidateImage)
-    }
+    inner class ViewHanger(val itemview:View):RecyclerView.ViewHolder(itemview){
 
-    override fun getItemCount(): Int = datas.size
-}
-class viewHolderMain(val itemview: View):RecyclerView.ViewHolder(itemview){
-    val participantName = itemview.findViewById<TextView>(R.id.participantNameText)
-    val partyName = itemview.findViewById<TextView>(R.id.partyNameText)
-    val partyLogo = itemview.findViewById<ImageView>(R.id.partyImage)
-    val candidateImage: ImageView = itemview.findViewById(R.id.CandidatePhoto)
+        var NameofCandidate=itemview.findViewById<TextView>(R.id.name_of_candidate)
+        var NameofParty=itemview.findViewById<TextView>(R.id.name_of_party)
+        var PictureofCandidate=itemview.findViewById<ImageView>(R.id.photo_of_candidate)
+        var LogoofParty=itemview.findViewById<ImageView>(R.id.photo_of_party)
 
-    init {
-        itemview.setOnClickListener{ v :View ->
-
-            if (selectedno != -1)
-                ShowVoting.resetColor(selectedno)
-            selectedno = adapterPosition
-            val cardviewMain:LinearLayout = itemview.findViewById(R.id.cardviewMain)
-            cardviewMain.setBackgroundColor(Color.CYAN)
-            isselected = true
-            ShowVoting.checkBtn()
+        init {
+            for(i in 0..2){
+                tempInfo.add(Item(info[i].CandidateName,info[i].PartyName,info[i].CandidatePhoto,info[i].PartyLogo))
+            }
         }
+        init{
+            itemview.setOnClickListener(){
+                tempPosition=adapterPosition
+
+                Toast.makeText(itemview.context,"You want to vote ${info[tempPosition].CandidateName} with candidate number $tempPosition",Toast.LENGTH_LONG).show()
+                tempInfo.add(Item(info[tempPosition].CandidateName,info[tempPosition].PartyName,info[tempPosition].CandidatePhoto,info[tempPosition].PartyLogo))
+            }
+        }
+
     }
 
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHanger {
+        val view=LayoutInflater.from(parent.context).inflate(R.layout.each_cand_view,parent,false)
+        return ViewHanger(view)
+    }
 
+    override fun onBindViewHolder(holder: ViewHanger, position: Int) {
+        val currentItem=info[position]
+        holder.NameofCandidate.text=currentItem.CandidateName
+        holder.NameofParty.text=currentItem.PartyName
+        holder.PictureofCandidate.setImageResource(currentItem.CandidatePhoto)
+        holder.LogoofParty.setImageResource(currentItem.PartyLogo)
+
+    }
+
+    override fun getItemCount(): Int=info.size
 }

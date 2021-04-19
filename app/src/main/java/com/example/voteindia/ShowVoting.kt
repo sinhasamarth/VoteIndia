@@ -4,8 +4,11 @@ import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.LinearLayout
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.DataSnapshot
@@ -13,73 +16,48 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import open.git.votingmainpainel.adapter
+import open.git.votingmainpainel.tempInfo
+import open.git.votingmainpainel.tempPosition
 
-var isselected = false
-var selectedno:Int  = -1
-private lateinit var Btn : Button
-private lateinit var recylerview: RecyclerView
-var tempArray = ArrayList<Maindata>(3)
 
 class ShowVoting : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_show_voting)
-        Btn = findViewById(R.id.btn)
-        recylerview = findViewById(R.id.recylerViewMain)
-        recylerview.layoutManager = LinearLayoutManager(this)
-        recylerview.adapter = adapter(getdata())
+        var recyclerview=findViewById<RecyclerView>(R.id.recycler_views)
+        recyclerview.adapter=adapter(getdata())
+        recyclerview.layoutManager=LinearLayoutManager(this)
 
     }
-
-    private fun getdata(): ArrayList<Maindata> {
-
-        val ref = FirebaseDatabase.getInstance().getReference("LiveVoting/800009")
-        ref.addValueEventListener(object : ValueEventListener{
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if(snapshot!!.exists())
-                {
-                    val p = snapshot.childrenCount
-                    for (i in 1..(p))
-                    {
-                        val temp1 = snapshot.child("cand$i")
-                        val PartyName = temp1.child("PartyName").value.toString()
-                        val UIDcand = temp1.child("UIDCAND").value.toString()
-                        val CandLogo = temp1.child("CandLogo").value.toString()
-                        val PartyLogo = temp1.child("PartyLogo").value.toString()
-                        val Name = temp1.child("Name").value.toString()
-                        val m = Maindata(
-                                Name,PartyName,PartyLogo,CandLogo,UIDcand
-                        )
-                        Log.d("jjj" , m.toString())
-                        tempArray.add(m)
-
-                    }
-                }
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
-        })
-        Log.d("HII", tempArray.toString())
-        return tempArray
-
-    }
-
-
-    companion object{
-        fun resetColor(data:Int)
+    private fun getdata(): ArrayList<Item>{
+        var TempArray=ArrayList<Item>(0)
+        var name= arrayOf("Narendra Modi","Rahul Gandhi","Nitish Kumar")
+        var pNames = arrayOf("BJP","INC","JDU")
+        var cphoto = arrayOf(R.drawable.modi,R.drawable.rahul,R.drawable.nitishkumar)
+        var pphoto = arrayOf(R.drawable.modilogo,R.drawable.congresslogo,R.drawable.jdulogo)
+        for(i in 0..2)
         {
-            recylerview.findViewHolderForAdapterPosition(data)?.itemView?.findViewById<LinearLayout>(R.id.cardviewMain)?.setBackgroundColor(Color.WHITE)
-            Log.d("HII","$data")
-
+            TempArray.add(Item(name[i],pNames[i],cphoto[i],pphoto[i]))
         }
-        fun checkBtn() {
-            if (isselected) {
-                Btn.isEnabled = true
-            }
-        }
+        return TempArray
 
+    }
+
+
+    fun ConfirmVoting(view: View) {
+        var alert= AlertDialog.Builder(this)
+        alert.setTitle("CONFIRM VOTE")
+        alert.setMessage("You are going to vote ${tempInfo[tempPosition].CandidateName} of Party ${tempInfo[tempPosition].PartyName}. Are you sure?")
+        alert.setPositiveButton("VOTE"){dialogInterface, which ->
+            Toast.makeText(this,"You have voted ${tempInfo[tempPosition].CandidateName} of Party ${tempInfo[tempPosition].PartyName}.", Toast.LENGTH_LONG).show()
+
+            finish()
+        }
+        alert.setNegativeButton("CHOOSE AGAIN"){dialogInterface, which ->
+            Toast.makeText(this,"Please vote ", Toast.LENGTH_LONG).show()
+        }
+        val alertbox: AlertDialog = alert.create()
+        alertbox.show()
     }
 
 }
