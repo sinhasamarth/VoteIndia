@@ -11,35 +11,54 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 import open.git.votingmainpainel.adapter
 import open.git.votingmainpainel.tempInfo
 import open.git.votingmainpainel.tempPosition
+import android.widget.Adapter as Adapter
 
 
 class ShowVoting : AppCompatActivity() {
+    private lateinit var Dbreference: DatabaseReference
+    private lateinit var CandidatesDeatilsArray: ArrayList<Item>
+    private lateinit var  recyclerview: RecyclerView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_show_voting)
-        var recyclerview=findViewById<RecyclerView>(R.id.recycler_views)
-        recyclerview.adapter=adapter(getdata())
+
+         recyclerview=findViewById(R.id.recycler_views)
         recyclerview.layoutManager=LinearLayoutManager(this)
+        recyclerview.setHasFixedSize(true)
+        getdata()
+
 
     }
-    private fun getdata(): ArrayList<Item>{
-        var TempArray=ArrayList<Item>(0)
-        var name= arrayOf("Narendra Modi","Rahul Gandhi","Nitish Kumar")
-        var pNames = arrayOf("BJP","INC","JDU")
-        var cphoto = arrayOf(R.drawable.modi,R.drawable.rahul,R.drawable.nitishkumar)
-        var pphoto = arrayOf(R.drawable.modilogo,R.drawable.congresslogo,R.drawable.jdulogo)
-        for(i in 0..2)
-        {
-            TempArray.add(Item(name[i],pNames[i],cphoto[i],pphoto[i]))
-        }
-        return TempArray
+    private fun getdata(){
+
+        Dbreference = FirebaseDatabase.getInstance().getReference("LiveVoting")
+        var tempArray=ArrayList<Item>(0)
+
+        Dbreference.addValueEventListener(object : ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if(snapshot.exists())
+                {
+                    for (mySnap in snapshot.children)
+                    {
+                        val temp = mySnap.getValue(Item::class.java)
+                        Log.d("Datass", temp.toString())
+                        tempArray.add(temp!!)
+                    }
+                }
+                Log.d("xxxxoo","$tempArray")
+                recyclerview.adapter = adapter(tempArray)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
+
 
     }
 

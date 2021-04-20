@@ -8,6 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.voteindia.Item
 import com.example.voteindia.R
 
@@ -48,8 +49,12 @@ class adapter(val info:ArrayList<Item>):RecyclerView.Adapter<adapter.ViewHanger>
         val currentItem=info[position]
         holder.NameofCandidate.text=currentItem.CandidateName
         holder.NameofParty.text=currentItem.PartyName
-        holder.PictureofCandidate.setImageResource(currentItem.CandidatePhoto)
-        holder.LogoofParty.setImageResource(currentItem.PartyLogo)
+        Glide.with(holder.LogoofParty.getContext())
+            .load(currentItem.PartyLogo)
+            .into(holder.LogoofParty)
+        Glide.with(holder.PictureofCandidate.getContext())
+            .load(currentItem.CandidatePhoto)
+            .into(holder.PictureofCandidate);
 
     }
 

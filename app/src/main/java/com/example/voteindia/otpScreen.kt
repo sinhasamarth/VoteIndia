@@ -100,7 +100,11 @@ class otpScreen() : AppCompatActivity() {
             .addOnCompleteListener(this) {task ->
                 if(task.isSuccessful)
                 {
-                    startActivity(Intent(this,ShowVoting::class.java))
+                    val nextActivity = Intent(this,ShowVoting::class.java)
+                    nextActivity.putExtra("Pincode",intent.getStringExtra("UserPincode"))
+                    nextActivity.putExtra("Name",intent.getStringExtra("UserName"))
+                    nextActivity.putExtra("UID",intent.getStringExtra("UIDNo"))
+                    startActivity(nextActivity)
                 }
                 else{
                     // Sign in failed, display a message and update the UI
