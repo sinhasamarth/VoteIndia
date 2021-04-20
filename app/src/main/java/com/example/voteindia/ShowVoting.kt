@@ -35,7 +35,8 @@ class ShowVoting : AppCompatActivity() {
     }
     private fun getdata(){
 
-        Dbreference = FirebaseDatabase.getInstance().getReference("LiveVoting")
+       val Pincode = intent.getStringExtra("Pincodess").toString()
+        Dbreference = FirebaseDatabase.getInstance().getReference("LiveVoting/$Pincode")
         var tempArray=ArrayList<Item>(0)
 
         Dbreference.addValueEventListener(object : ValueEventListener{
@@ -68,7 +69,9 @@ class ShowVoting : AppCompatActivity() {
         alert.setTitle("CONFIRM VOTE")
         alert.setMessage("You are going to vote ${tempInfo[tempPosition].CandidateName} of Party ${tempInfo[tempPosition].PartyName}. Are you sure?")
         alert.setPositiveButton("VOTE"){dialogInterface, which ->
-            Toast.makeText(this,"You have voted ${tempInfo[tempPosition].CandidateName} of Party ${tempInfo[tempPosition].PartyName}.", Toast.LENGTH_LONG).show()
+            Toast.makeText(this,
+                "You have voted ${tempInfo[tempPosition].CandidateName} of Party ${tempInfo[tempPosition].PartyName}.",
+                Toast.LENGTH_LONG).show()
 
             finish()
         }
