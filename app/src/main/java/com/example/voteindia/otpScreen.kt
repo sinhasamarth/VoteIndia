@@ -101,10 +101,11 @@ class otpScreen() : AppCompatActivity() {
                 if(task.isSuccessful)
                 {
                     val nextActivity = Intent(this,ShowVoting::class.java)
-                    val PincodeOfUser = intent.getStringExtra("UserPincode")
+                    val PincodeOfUser = intent.getStringExtra("UserPincode").toString()
                     nextActivity.putExtra("Pincodess",PincodeOfUser)
-                    nextActivity.putExtra("Name",intent.getStringExtra("UserName"))
-                    nextActivity.putExtra("UID",intent.getStringExtra("UIDNo"))
+                    nextActivity.putExtra("Name",intent.getStringExtra("UserName").toString())
+                    nextActivity.putExtra("UID",intent.getStringExtra("UIDNo").toString())
+                    Log.d("USernameOtp",intent.getStringExtra("UserName").toString())
                     startActivity(nextActivity)
                 }
                 else{

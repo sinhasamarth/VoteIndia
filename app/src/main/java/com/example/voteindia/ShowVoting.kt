@@ -1,5 +1,6 @@
 package com.example.voteindia
 
+import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -22,6 +23,9 @@ class ShowVoting : AppCompatActivity() {
     private lateinit var Dbreference: DatabaseReference
     private lateinit var CandidatesDeatilsArray: ArrayList<Item>
     private lateinit var  recyclerview: RecyclerView
+    private lateinit var  Pincode: String
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_show_voting)
@@ -35,7 +39,7 @@ class ShowVoting : AppCompatActivity() {
     }
     private fun getdata(){
 
-       val Pincode = intent.getStringExtra("Pincodess").toString()
+        Pincode = intent.getStringExtra("Pincodess").toString()
         Dbreference = FirebaseDatabase.getInstance().getReference("LiveVoting/$Pincode")
         var tempArray=ArrayList<Item>(0)
 
@@ -69,11 +73,14 @@ class ShowVoting : AppCompatActivity() {
         alert.setTitle("CONFIRM VOTE")
         alert.setMessage("You are going to vote ${tempInfo[tempPosition].CandidateName} of Party ${tempInfo[tempPosition].PartyName}. Are you sure?")
         alert.setPositiveButton("VOTE"){dialogInterface, which ->
-            Toast.makeText(this,
-                "You have voted ${tempInfo[tempPosition].CandidateName} of Party ${tempInfo[tempPosition].PartyName}.",
-                Toast.LENGTH_LONG).show()
 
-            finish()
+                val uid = intent.getStringExtra("UID").toString()
+                val CandUID = tempInfo[tempPosition].CandidateUID
+                val candName = tempInfo[tempPosition].CandidateName
+                val candParty = tempInfo[tempPosition].PartyName
+                val UserName = intent.getStringExtra("Name").toString()
+                Log.d("UsernAme ", UserName)
+            VoteNow(uid, CandUID ,candName,candParty,Pincode,UserName )
         }
         alert.setNegativeButton("CHOOSE AGAIN"){dialogInterface, which ->
             Toast.makeText(this,"Please vote ", Toast.LENGTH_LONG).show()
@@ -81,5 +88,45 @@ class ShowVoting : AppCompatActivity() {
         val alertbox: AlertDialog = alert.create()
         alertbox.show()
     }
+    private fun VoteNow(uid: String,
+                        candUID: String?,
+                        candName: String?,
+                        candParty: String?,
+                        Pincode:String?,
+                        UserName:String?)
+    {
+        val Dbref = FirebaseDatabase.getInstance().getReference("VoteCounter/$Pincode")
+            Log.d("UID", UserName.toString())
+        Dbref.child("$uid").get().addOnSuccessListener {
+            if (it.exists()  && it.child("candParty").value != null && it.childrenCount > 0   )
+            {
+                Toast.makeText(this ,"You Have Already Voted ", Toast.LENGTH_LONG).show()
+                finish()
+            }
+            else
+            {
+                Dbref.child("$uid").setValue(VoteDetails(candUID, candName, candParty)).addOnSuccessListener {
+                    val nextIntent = Intent(this, VotingDone::class.java)
+                    nextIntent.putExtra("CandName", candName)
+                    nextIntent.putExtra("UserName", UserName)
+                    nextIntent.putExtra("PartyName", candParty)
+                    startActivity(nextIntent)
+
+
+                }
+            Log.d("CHecking Firebasse", "$it ssss")
+
+        }
+
+
+
+        }
+
+    }
+    private inner class VoteDetails(var candUID: String?,var  candName: String?, var candParty: String?)
+
 
 }
+
+
+

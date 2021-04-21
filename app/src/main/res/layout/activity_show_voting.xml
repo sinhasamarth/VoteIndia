@@ -21,7 +21,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:text="CONFIRM YOUR VOTING"
-        android:layout_marginBottom="5dp"
+        android:textColor="@color/white"
+        android:layout_marginBottom="10dp"
+        android:textSize="15sp"
         android:onClick="ConfirmVoting"
         app:cornerRadius="10dp"/>
 
