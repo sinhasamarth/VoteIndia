@@ -22,7 +22,6 @@ import android.widget.Adapter as Adapter
 
 class ShowVoting : AppCompatActivity() {
     private lateinit var Dbreference: DatabaseReference
-    private lateinit var CandidatesDeatilsArray: ArrayList<Item>
     private lateinit var  recyclerview: RecyclerView
     private lateinit var  Pincode: String
 
@@ -44,28 +43,42 @@ class ShowVoting : AppCompatActivity() {
         Dbreference = FirebaseDatabase.getInstance().getReference("LiveVoting/$Pincode")
         var tempArray=ArrayList<Item>(0)
 
-        Dbreference.addValueEventListener(object : ValueEventListener{
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if(snapshot.exists())
-                {
-                    for (mySnap in snapshot.children)
-                    {
-                        val temp = mySnap.getValue(Item::class.java)
-                        Log.d("Datass", temp.toString())
-                        tempArray.add(temp!!)
+        Dbreference.get().addOnSuccessListener {
+
+            if (it.childrenCount>0 && it.exists() && it.value != null) {
+                Dbreference.addValueEventListener(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        if (snapshot.exists()) {
+                            for (mySnap in snapshot.children) {
+                                val temp = mySnap.getValue(Item::class.java)
+                                Log.d("Datass", temp.toString())
+                                tempArray.add(temp!!)
+                            }
+                        }
+                        Log.d("xxxxoo", "$tempArray")
+                        recyclerview.adapter = adapter(tempArray)
                     }
-                }
-                Log.d("xxxxoo","$tempArray")
-                recyclerview.adapter = adapter(tempArray)
+
+                    override fun onCancelled(error: DatabaseError) {
+                    }
+
+                })
             }
 
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
+            else
+            {
+                val i = Intent(this, Error::class.java)
+                i.putExtra("ErrorMsg", "Voting is Closed in Your Area")
+                startActivity(i)
+                finish()
             }
 
-        })
-
-
+        }.addOnFailureListener {
+            val i = Intent(this, Error::class.java)
+            i.putExtra("ErrorMsg", "$it")
+            startActivity(i)
+            finish()
+        }
     }
 
 

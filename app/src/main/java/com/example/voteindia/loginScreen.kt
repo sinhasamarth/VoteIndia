@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.widget.Button
-import com.example.voteindia.userData
 import android.widget.Toast
 import androidx.core.widget.doOnTextChanged
 import com.example.voteindia.databinding.ActivityLoginScreenBinding
@@ -44,7 +43,7 @@ class loginScreen : AppCompatActivity() {
         getuid.doOnTextChanged { text, start, before, count ->
             if(text!!.length<12)
             {
-                getuid.error="Enter Full UID"
+                getuid.error="Enter Full UID Number"
                 checkAllConditions[0] = false
 
             }

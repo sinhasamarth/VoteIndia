@@ -7,6 +7,7 @@ import android.os.CountDownTimer
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.core.widget.doOnTextChanged
 import com.example.voteindia.databinding.ActivityOtpScreenBinding
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.*
@@ -21,6 +22,7 @@ private lateinit var callbacks: PhoneAuthProvider.OnVerificationStateChangedCall
 private lateinit var resendTocken:PhoneAuthProvider.ForceResendingToken
 private lateinit var verification_Id:String
 private lateinit var PhoneNo:String
+private  var CodeSentFlag:Boolean = false
 class otpScreen() : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,11 +39,28 @@ class otpScreen() : AppCompatActivity() {
         coundownTimerStarter()
         createcallacks()
         sendOtp()
+
         binding.OtpmainBtn.setOnClickListener{
             val code = binding.getOtp.text.toString()
                 Log.d("OTP Final",code)
                 val credential = PhoneAuthProvider.getCredential(verification_Id,code)
                 signInWithPhoneAuthCredential(credential)
+        }
+
+
+        binding.getOtp.doOnTextChanged{text, start, before, count ->
+            if(  binding.getOtp.text!!.length ==  6)
+            {
+                binding.getOtp.error = null
+                if (CodeSentFlag) {
+                    binding.OtpmainBtn.isEnabled = true
+                }
+            }
+           else{
+                binding.OtpmainBtn.isEnabled = false
+                binding.getOtp.error = "Enter Otp"
+            }
+
         }
 
 
@@ -76,7 +95,7 @@ class otpScreen() : AppCompatActivity() {
             override fun onCodeSent(p0: String, p1: PhoneAuthProvider.ForceResendingToken) {
                 resendTocken = p1
                 verification_Id = p0
-                Log.d("OTP",p0)
+                CodeSentFlag = true
                 Toast.makeText(this@otpScreen,"Code Send",Toast.LENGTH_SHORT).show()
             }
 

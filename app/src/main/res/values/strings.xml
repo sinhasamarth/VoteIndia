@@ -13,4 +13,5 @@
     <string name="enter_your_uid_number">Enter Your UID Number</string>
     <string name="enter_your_pincode">Enter Your Pincode</string>
     <string name="send_otp">Send Otp</string>
+    <string name="retry_now">Retry Now</string>
 </resources>

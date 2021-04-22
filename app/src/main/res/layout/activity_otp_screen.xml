@@ -52,14 +52,16 @@
         android:hint= "@string/otpText"
         android:textSize="15sp"
         app:helperTextEnabled="true"
-        app:helperText="Enter Otp above "
+        app:helperText="Enter Otp "
         app:errorEnabled="true"
         app:counterEnabled="true"
         app:counterMaxLength="6"
         app:hintEnabled="true"
+        app:helperTextTextColor="@color/redHelper"
         >
 
         <com.google.android.material.textfield.TextInputEditText
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="number"
@@ -93,6 +95,7 @@
             android:text="@string/submitText"
             app:cornerRadius="15dp"
             android:textColor="@color/white"
+            android:enabled="false"
             />
     </com.google.android.material.textfield.TextInputLayout>
 

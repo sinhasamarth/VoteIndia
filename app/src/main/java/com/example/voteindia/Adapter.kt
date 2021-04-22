@@ -25,7 +25,7 @@ class adapter(val info:ArrayList<Item>):RecyclerView.Adapter<adapter.ViewHanger>
         var LogoofParty=itemview.findViewById<ImageView>(R.id.photo_of_party)
 
         init {
-            for(i in 0..2){
+            for(i in 0 until  info.size ){
                 tempInfo.add(Item(info[i].CandidateName,info[i].PartyName,info[i].CandidatePhoto,info[i].PartyLogo))
             }
         }
