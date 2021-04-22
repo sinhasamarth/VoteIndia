@@ -10,6 +10,7 @@ import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.*
@@ -100,7 +101,9 @@ class ShowVoting : AppCompatActivity() {
         Dbref.child("$uid").get().addOnSuccessListener {
             if (it.exists()  && it.child("candParty").value != null && it.childrenCount > 0   )
             {
-                Toast.makeText(this ,"You Have Already Voted ", Toast.LENGTH_LONG).show()
+                val i = Intent(this, Error::class.java)
+                i.putExtra("ErrorMsg", "Already Voted")
+                startActivity(i)
                 finish()
             }
             else
@@ -115,12 +118,7 @@ class ShowVoting : AppCompatActivity() {
 
                 }
             Log.d("CHecking Firebasse", "$it ssss")
-
-        }
-
-
-
-        }
+        } }
 
     }
     private inner class VoteDetails(var candUID: String?,var  candName: String?, var candParty: String?)

@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.VoteIndia">
-        <activity android:name=".VotingDone"></activity>
+        <activity android:name=".Error"></activity>
+        <activity android:name=".VotingDone" />
         <activity android:name=".ShowVoting" />
         <activity android:name=".loginScreen" />
         <activity android:name=".otpScreen" />
